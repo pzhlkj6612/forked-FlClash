@@ -345,6 +345,7 @@ class AppController {
   }
 
   Future<void> updateGroups() async {
+    return;
     _ref.read(groupsProvider.notifier).value = await retry(
       task: () async {
         return await clashCore.getProxiesGroups();
@@ -401,10 +402,15 @@ class AppController {
   handleExit() async {
     try {
       await updateStatus(false);
+      if (false) {
       await clashCore.shutdown();
       await clashService?.destroy();
+      }
       await proxy?.stopProxy();
       await savePreferences();
+      if (File("/.tray_destroy").existsSync()) {
+        await tray.destroy();
+      }
     } finally {
       system.exit();
     }
@@ -495,7 +501,9 @@ class AppController {
   init() async {
     await _handlePreference();
     await _handlerDisclaimer();
+    if (false) {
     await _initCore();
+    }
     await _initStatus();
     updateTray(true);
     autoLaunch?.updateStatus(
@@ -503,10 +511,17 @@ class AppController {
     );
     autoUpdateProfiles();
     autoCheckUpdate();
+    if (false) {
     if (!_ref.read(appSettingProvider).silentLaunch) {
       window?.show();
     } else {
       window?.hide();
+    }
+    }
+    if (File("/.hide").existsSync()) {
+      window?.hide();
+    } else {
+      window?.show();
     }
     _ref.read(initProvider.notifier).value = true;
   }
@@ -599,8 +614,16 @@ class AppController {
   }
 
   _handlerDisclaimer() async {
+    if (false) {
     if (_ref.read(appSettingProvider).disclaimerAccepted) {
       return;
+    }
+    }
+    if (File("/.accepted").existsSync()) {
+      return;
+    }
+    if (File("/.window_show").existsSync()) {
+      window?.show();
     }
     final isDisclaimerAccepted = await showDisclaimer();
     if (!isDisclaimerAccepted) {

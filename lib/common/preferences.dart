@@ -25,6 +25,7 @@ class Preferences {
   }
 
   Future<ClashConfig?> getClashConfig() async {
+    return null;
     final preferences = await sharedPreferencesCompleter.future;
     final clashConfigString = preferences?.getString(clashConfigKey);
     if (clashConfigString == null) return null;
@@ -33,6 +34,7 @@ class Preferences {
   }
 
   Future<Config?> getConfig() async {
+    return null;
     final preferences = await sharedPreferencesCompleter.future;
     final configString = preferences?.getString(configKey);
     if (configString == null) return null;
@@ -41,6 +43,7 @@ class Preferences {
   }
 
   Future<bool> saveConfig(Config config) async {
+    return false;
     final preferences = await sharedPreferencesCompleter.future;
     return await preferences?.setString(
           configKey,
@@ -50,11 +53,13 @@ class Preferences {
   }
 
   clearClashConfig() async {
+    return;
     final preferences = await sharedPreferencesCompleter.future;
     preferences?.remove(clashConfigKey);
   }
 
   clearPreferences() async {
+    return;
     final sharedPreferencesIns = await sharedPreferencesCompleter.future;
     sharedPreferencesIns?.clear();
   }

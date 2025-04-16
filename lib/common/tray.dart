@@ -195,6 +195,13 @@ class Tray {
       ),
     );
   }
+
+  Future destroy() async {
+    if (Platform.isAndroid) {
+      return;
+    }
+    await trayManager.destroy();
+  }
 }
 
 final tray = Tray();
